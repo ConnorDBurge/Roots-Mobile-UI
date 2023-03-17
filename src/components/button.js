@@ -1,9 +1,10 @@
+import { Button as _Button } from "native-base";
 import React from "react";
 import { StyleSheet, Text } from "react-native";
 
 export const Button = ({ text, onPress, style }) => {
   return (
-    <Button style={styles.button} onPress={onPress}>
+    <_Button style={style} onPress={onPress}>
       <Text
         style={{
           fontWeight: style?.fontWeight,
@@ -13,7 +14,7 @@ export const Button = ({ text, onPress, style }) => {
       >
         {text}
       </Text>
-    </Button>
+    </_Button>
   );
 };
 

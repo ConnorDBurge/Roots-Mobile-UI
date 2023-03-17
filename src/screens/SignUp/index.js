@@ -1,4 +1,4 @@
-import { Text } from "native-base";
+import { Text, View } from "native-base";
 import React from "react";
 import { StyleSheet, SafeAreaView } from "react-native";
 import { useForm } from "react-hook-form";
@@ -74,9 +74,33 @@ export const SignUp = () => {
         rules={{ required: true }}
       />
       <Button
-        style={styles.button}
+        style={styles.signUpButton}
         onPress={handleSubmit(onSignUp)}
         text={"Sign Up"}
+      />
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+        }}
+      >
+        <View style={{ flex: 1, height: 1, backgroundColor: "#9CA5B4" }} />
+        <Text
+          style={{
+            width: 50,
+            textAlign: "center",
+            color: "#9CA5B4",
+            marginVertical: 15,
+          }}
+        >
+          or
+        </Text>
+        <View style={{ flex: 1, height: 1, backgroundColor: "#9CA5B4" }} />
+      </View>
+      <Button
+        style={styles.googleButton}
+        onPress={handleSubmit(onSignUp)}
+        text={"Sign Up with Google"}
       />
     </SafeAreaView>
   );
@@ -101,13 +125,21 @@ const styles = StyleSheet.create({
     fillColor: "#03A87C",
     borderColor: "#5E656F",
   },
-  button: {
+  signUpButton: {
     marginTop: 40,
-    backgroundColor: "#03A87C",
     borderRadius: 2,
     height: 50,
     fontWeight: 700,
     color: "#FFFFFF",
     fontSize: 16,
+    backgroundColor: "#03A87C",
+  },
+  googleButton: {
+    borderRadius: 2,
+    height: 50,
+    fontWeight: 700,
+    color: "#FFFFFF",
+    fontSize: 16,
+    backgroundColor: "#181A1F",
   },
 });
