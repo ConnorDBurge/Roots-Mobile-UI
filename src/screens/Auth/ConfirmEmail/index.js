@@ -1,8 +1,9 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { Auth } from "aws-amplify";
 import { Text, View } from "native-base";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 
 import { Button, Header, Link, TextInput } from "../../../components";
 
@@ -14,13 +15,17 @@ export const ConfirmEmail = () => {
   });
   const email = watch("email");
 
-  const onConfirmEmail = (data) => {
-    console.log({ data });
-    navigation.navigate("LogIn", { email });
+  const onConfirmEmail = async ({ email, confirmation }) => {
+    try {
+      await Auth.confirmSignUp(email, confirmation);
+      navigation.navigate("LogIn", { email });
+    } catch (e) {
+      Alert.alert("Ooops", e.message);
+    }
   };
 
-  const onResendCode = () => {
-    console.warn(`Code sent to ${email}`);
+  const onResendCode = async () => {
+    await Auth.resendSignUp(email);
   };
 
   return (

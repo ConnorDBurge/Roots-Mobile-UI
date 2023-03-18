@@ -1,11 +1,11 @@
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { Auth } from "aws-amplify";
 import { Text, View } from "native-base";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { StyleSheet } from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
 
-import { Google } from "../../../../assets/google";
-import { Button, Checkbox, Header, Link, TextInput } from "../../../components";
+import { Button, Header, Link, TextInput } from "../../../components";
 
 export const ResetPassword = () => {
   const navigation = useNavigation();
@@ -16,13 +16,17 @@ export const ResetPassword = () => {
   const password = watch("password");
   const email = watch("email");
 
-  const onResetPassword = (data) => {
-    console.log({ data });
-    navigation.navigate("LogIn");
+  const onResetPassword = async ({ email, confirmation, password }) => {
+    try {
+      await Auth.forgotPasswordSubmit(email, confirmation, password);
+      navigation.navigate("LogIn", { email });
+    } catch (e) {
+      Alert.alert("Ooops", e.message);
+    }
   };
 
-  const onResendCode = () => {
-    console.warn(`Code sent to ${email}`);
+  const onResendCode = async () => {
+    await Auth.forgotPassword(email);
   };
 
   return (

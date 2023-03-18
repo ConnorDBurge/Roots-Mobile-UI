@@ -1,8 +1,9 @@
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
+import { Auth } from "aws-amplify";
 import { Text, View } from "native-base";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Alert } from "react-native";
 
 import { Button, Header, Link, TextInput } from "../../../components";
 
@@ -10,9 +11,13 @@ export const ForgotPassword = () => {
   const navigation = useNavigation();
   const { control, handleSubmit } = useForm();
 
-  const onSendCode = (data) => {
-    console.log({ data });
-    navigation.navigate("ResetPassword", { email: data?.email });
+  const onSendCode = async ({ email }) => {
+    try {
+      await Auth.forgotPassword(email);
+      navigation.navigate("ResetPassword", { email });
+    } catch (e) {
+      Alert.alert("Ooops", e.message);
+    }
   };
 
   return (

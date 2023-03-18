@@ -1,8 +1,9 @@
+import { useNavigation } from "@react-navigation/native";
+import { Auth } from "aws-amplify";
 import { Text, View } from "native-base";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { StyleSheet } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { Alert, StyleSheet } from "react-native";
 
 import { Google } from "../../../../assets/google";
 import { Button, Checkbox, Header, Link, TextInput } from "../../../components";
@@ -12,9 +13,17 @@ export const SignUp = () => {
   const { control, handleSubmit, watch } = useForm();
   const password = watch("password");
 
-  const onSignUp = (data) => {
-    console.log({ data });
-    navigation.navigate("ConfirmEmail", { email: data?.email });
+  const onSignUp = async ({ first_name, email, password }) => {
+    try {
+      await Auth.signUp({
+        username: email,
+        password,
+        attributes: { given_name: first_name, email },
+      });
+      navigation.navigate("ConfirmEmail", { email });
+    } catch (e) {
+      Alert.alert("Ooops", e.message);
+    }
   };
 
   return (
