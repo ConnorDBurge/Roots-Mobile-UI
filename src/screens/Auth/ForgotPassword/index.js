@@ -1,27 +1,38 @@
 import { useNavigation } from "@react-navigation/native";
 import { Auth } from "aws-amplify";
 import { Text, View } from "native-base";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { StyleSheet, Alert } from "react-native";
 
-import { Button, Header, Link, TextInput } from "../../../components";
+import {
+  Button,
+  Header,
+  Link,
+  TextInput,
+  LoadingOverlay,
+} from "../../../components";
 
 export const ForgotPassword = () => {
   const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
   const { control, handleSubmit } = useForm();
 
   const onSendCode = async ({ email }) => {
+    if (loading) return;
+    setLoading(true);
     try {
       await Auth.forgotPassword(email);
       navigation.navigate("ResetPassword", { email });
     } catch (e) {
-      Alert.alert("Ooops", e.message);
+      Alert.alert(e.message);
     }
+    setLoading(false);
   };
 
   return (
     <View style={styles.page}>
+      {loading && <LoadingOverlay color={"#3C4142"} text={"Sending Code"} />}
       <View style={styles.container}>
         <Header style={styles.header} title={"Forgot Password"} />
         <TextInput

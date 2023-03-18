@@ -1,19 +1,29 @@
 import { useNavigation } from "@react-navigation/native";
 import { Auth } from "aws-amplify";
 import { Text, View } from "native-base";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Alert, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 import { Google } from "../../../../assets/google";
-import { Button, Checkbox, Header, Link, TextInput } from "../../../components";
+import {
+  Button,
+  Checkbox,
+  Header,
+  Link,
+  TextInput,
+  LoadingOverlay,
+} from "../../../components";
 
 export const SignUp = () => {
   const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
   const { control, handleSubmit, watch } = useForm();
   const password = watch("password");
 
   const onSignUp = async ({ first_name, email, password }) => {
+    if (loading) return;
+    setLoading(true);
     try {
       await Auth.signUp({
         username: email,
@@ -22,12 +32,14 @@ export const SignUp = () => {
       });
       navigation.navigate("ConfirmEmail", { email });
     } catch (e) {
-      Alert.alert("Ooops", e.message);
+      Alert.alert(e.message);
     }
+    setLoading(false);
   };
 
   return (
     <View style={styles.page}>
+      {loading && <LoadingOverlay color={"#03A87C"} text={"Signing Up"} />}
       <View style={styles.container}>
         <Header
           style={styles.header}

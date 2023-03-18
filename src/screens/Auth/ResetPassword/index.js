@@ -1,15 +1,23 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Auth } from "aws-amplify";
 import { Text, View } from "native-base";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Alert } from "react-native";
 
-import { Button, Header, Link, TextInput } from "../../../components";
+import {
+  Button,
+  Header,
+  Link,
+  TextInput,
+  LoadingOverlay,
+} from "../../../components";
 
 export const ResetPassword = () => {
   const navigation = useNavigation();
   const { params } = useRoute();
+  const [resetLoading, setResetLoading] = useState(false);
+  const [resendLoading, setResendLoading] = useState(false);
   const { control, handleSubmit, watch } = useForm({
     defaultValues: { email: params?.email },
   });
@@ -17,20 +25,32 @@ export const ResetPassword = () => {
   const email = watch("email");
 
   const onResetPassword = async ({ email, confirmation, password }) => {
+    if (resetLoading) return;
+    setResetLoading(true);
     try {
       await Auth.forgotPasswordSubmit(email, confirmation, password);
       navigation.navigate("LogIn", { email });
     } catch (e) {
-      Alert.alert("Ooops", e.message);
+      Alert.alert(e.message);
     }
+    setResetLoading(false);
   };
 
   const onResendCode = async () => {
-    await Auth.forgotPassword(email);
+    if (resendLoading) return;
+    setResendLoading(true);
+    try {
+      await Auth.forgotPassword(email);
+    } catch (e) {
+      Alert.alert(e.message);
+    }
+    setResendLoading(false);
   };
 
   return (
     <View style={styles.page}>
+      {resetLoading && <LoadingOverlay color={"#3C4142"} text={"Resetting"} />}
+      {resendLoading && <LoadingOverlay color={"#3C4142"} text={"Resending"} />}
       <View style={styles.container}>
         <Header
           style={styles.header}

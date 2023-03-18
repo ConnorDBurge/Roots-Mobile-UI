@@ -1,30 +1,41 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Auth } from "aws-amplify";
 import { Text, View } from "native-base";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Alert, StyleSheet } from "react-native";
+import { StyleSheet, Alert } from "react-native";
 
 import { Google } from "../../../../assets/google";
-import { Button, Header, Link, TextInput } from "../../../components";
+import {
+  Button,
+  Header,
+  Link,
+  LoadingOverlay,
+  TextInput,
+} from "../../../components";
 
 export const LogIn = () => {
   const { params } = useRoute();
   const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
   const { control, handleSubmit } = useForm({
     defaultValues: { email: params?.email },
   });
 
   const onLogIn = async ({ email, password }) => {
+    if (loading) return;
+    setLoading(true);
     try {
       await Auth.signIn(email, password);
     } catch (e) {
-      Alert.alert("Ooops", e.message);
+      Alert.alert(e.message);
     }
+    setLoading(false);
   };
 
   return (
     <View style={styles.page}>
+      {loading && <LoadingOverlay color={"#0071DF"} text={"Logging In"} />}
       <View style={styles.container}>
         <Header
           style={styles.header}

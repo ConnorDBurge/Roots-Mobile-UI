@@ -1,35 +1,58 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Auth } from "aws-amplify";
 import { Text, View } from "native-base";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Alert, StyleSheet } from "react-native";
+import { StyleSheet, Alert } from "react-native";
 
-import { Button, Header, Link, TextInput } from "../../../components";
+import {
+  Button,
+  Header,
+  Link,
+  LoadingOverlay,
+  TextInput,
+} from "../../../components";
 
 export const ConfirmEmail = () => {
   const navigation = useNavigation();
   const { params } = useRoute();
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [resendLoading, setResendLoading] = useState(false);
   const { control, handleSubmit, watch } = useForm({
     defaultValues: { email: params?.email },
   });
   const email = watch("email");
 
   const onConfirmEmail = async ({ email, confirmation }) => {
+    if (confirmLoading) return;
+    setConfirmLoading(true);
     try {
       await Auth.confirmSignUp(email, confirmation);
       navigation.navigate("LogIn", { email });
     } catch (e) {
-      Alert.alert("Ooops", e.message);
+      Alert.alert(e.message);
     }
+    setConfirmLoading(false);
   };
 
   const onResendCode = async () => {
-    await Auth.resendSignUp(email);
+    if (resendLoading) return;
+    setResendLoading(true);
+    try {
+      console.log({ email });
+      await Auth.resendSignUp(email);
+    } catch (e) {
+      Alert.alert(e.message);
+    }
+    setResendLoading(false);
   };
 
   return (
     <View style={styles.page}>
+      {confirmLoading && (
+        <LoadingOverlay color={"#03A87C"} text={"Confirming"} />
+      )}
+      {resendLoading && <LoadingOverlay color={"#FFFFFF"} text={"Resending"} />}
       <View style={styles.container}>
         <Header style={styles.header} title={"Confirm Email"} />
         <Text style={styles.subHeader}>
