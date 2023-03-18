@@ -12,31 +12,28 @@ export const Checkbox = ({ control, style, name, label, rules }) => {
         control={control}
         name={name}
         rules={rules}
-        render={({ field: { value, onChange }, fieldState: { error } }) => {
-          console.log(error);
-          return (
-            <Box style={styles.checkbox}>
-              <BouncyCheckbox
-                size={20}
-                fillColor={style?.fillColor}
-                iconStyle={{
-                  borderRadius: 2,
-                }}
-                innerIconStyle={{
-                  borderRadius: 2,
-                  borderColor: isEmpty(error)
-                    ? value
-                      ? style?.fillColor
-                      : style?.borderColor
-                    : "#FF7A59",
-                }}
-                onPress={onChange}
-              />
-              {label && label}
-              {rules?.required && <Text style={styles.required}>*</Text>}
-            </Box>
-          );
-        }}
+        render={({ field: { value, onChange }, fieldState: { error } }) => (
+          <Box style={styles.checkbox}>
+            <BouncyCheckbox
+              size={20}
+              fillColor={style?.fillColor}
+              iconStyle={{
+                borderRadius: 2,
+              }}
+              innerIconStyle={{
+                borderRadius: 2,
+                borderColor: isEmpty(error)
+                  ? value
+                    ? style?.fillColor
+                    : style?.borderColor
+                  : "#FF7A59",
+              }}
+              onPress={onChange}
+            />
+            {label && label}
+            {rules?.required && <Text style={styles.required}>•</Text>}
+          </Box>
+        )}
       />
     </Box>
   );

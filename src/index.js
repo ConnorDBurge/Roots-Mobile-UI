@@ -1,20 +1,7 @@
-import { StyleSheet } from "react-native";
-import { View } from "native-base";
+import "react-native-gesture-handler";
 
-import { SignUp } from "./screens";
+import { Navigation } from "./navigation";
 
 export const TheApp = () => {
-  return (
-    <View style={styles.container}>
-      <SignUp />
-    </View>
-  );
+  return <Navigation />;
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: "100%",
-    backgroundColor: "#21252B",
-  },
-});

@@ -20,6 +20,7 @@ export const TextInput = ({
   secure,
   name,
   control,
+  email,
   rules = {},
 }) => {
   const [show, setShow] = useState(false);
@@ -61,65 +62,72 @@ export const TextInput = ({
         render={({
           field: { value, onChange, onBlur },
           fieldState: { error },
-        }) => (
-          <TouchableWithoutFeedback
-            onPress={Keyboard.dismiss}
-            accessible={false}
-          >
-            <FormControl isInvalid={!isEmpty(error)} w="100%">
-              <Box style={styles.label}>
-                {label && (
-                  <FormControl.Label>
-                    <Text style={{ color: "#9CA5B4" }}>{label}</Text>
-                    {rules?.required && <Text style={styles.required}>*</Text>}
-                  </FormControl.Label>
-                )}
-                <FormControl.ErrorMessage
-                  _text={styles.error}
-                  rightIcon={
-                    <WarningOutlineIcon size="xs" style={styles.error} />
+        }) => {
+          return (
+            <TouchableWithoutFeedback
+              onPress={Keyboard.dismiss}
+              accessible={false}
+            >
+              <FormControl isInvalid={!isEmpty(error)} w="100%">
+                <Box style={styles.label}>
+                  {label && (
+                    <FormControl.Label>
+                      <Text style={{ color: "#9CA5B4" }}>{label}</Text>
+                      {rules?.required && (
+                        <Text style={styles.required}>•</Text>
+                      )}
+                    </FormControl.Label>
+                  )}
+                  <FormControl.ErrorMessage
+                    _text={styles.error}
+                    rightIcon={
+                      <WarningOutlineIcon size="xs" style={styles.error} />
+                    }
+                  >
+                    {error?.message || "Error"}
+                  </FormControl.ErrorMessage>
+                </Box>
+                <Input
+                  _invalid={styles.error}
+                  style={styles.input}
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  borderRadius="2"
+                  autoCorrect={false}
+                  autoCapitalize={"none"}
+                  focusOutlineColor="#FFFFFF"
+                  _focus={{
+                    backgroundColor: "none",
+                    caretHidden: true,
+                  }}
+                  borderColor="#5E656F"
+                  keyboardAppearance="dark"
+                  keyboardType={email ? "email-address" : undefined}
+                  textContentType="oneTimeCode"
+                  type={secure ? (show ? "text" : "password") : undefined}
+                  InputRightElement={
+                    secure ? (
+                      <Pressable onPress={() => setShow(!show)}>
+                        <Icon
+                          as={
+                            <MaterialIcons
+                              name={show ? "visibility" : "visibility-off"}
+                            />
+                          }
+                          size={5}
+                          mr="4"
+                          color={show ? "#9CA5B4" : "#FFFFFF"}
+                        />
+                      </Pressable>
+                    ) : undefined
                   }
-                >
-                  {error?.message || "Error"}
-                </FormControl.ErrorMessage>
-              </Box>
-              <Input
-                _invalid={styles.error}
-                style={styles.input}
-                value={value}
-                onChangeText={onChange}
-                onBlur={onBlur}
-                borderRadius="2"
-                focusOutlineColor="#FFFFFF"
-                _focus={{
-                  backgroundColor: "none",
-                  caretHidden: true,
-                }}
-                borderColor="#5E656F"
-                keyboardAppearance="dark"
-                textContentType="oneTimeCode"
-                type={secure ? (show ? "text" : "password") : undefined}
-                InputRightElement={
-                  secure ? (
-                    <Pressable onPress={() => setShow(!show)}>
-                      <Icon
-                        as={
-                          <MaterialIcons
-                            name={show ? "visibility" : "visibility-off"}
-                          />
-                        }
-                        size={5}
-                        mr="4"
-                        color={show ? "#9CA5B4" : "#FFFFFF"}
-                      />
-                    </Pressable>
-                  ) : undefined
-                }
-              />
-              <FormControl.HelperText>{helperText}</FormControl.HelperText>
-            </FormControl>
-          </TouchableWithoutFeedback>
-        )}
+                />
+                <FormControl.HelperText>{helperText}</FormControl.HelperText>
+              </FormControl>
+            </TouchableWithoutFeedback>
+          );
+        }}
       />
     </Box>
   );
