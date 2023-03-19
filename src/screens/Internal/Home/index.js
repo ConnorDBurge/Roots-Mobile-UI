@@ -1,67 +1,55 @@
-import { Auth } from "aws-amplify";
-import { View } from "native-base";
+import { FontAwesome5, Fontisto } from "@expo/vector-icons";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
-import { StyleSheet } from "react-native";
 
-import { Button } from "../../../components";
-import { useAuth } from "../../../providers";
+import { TrashMeLater } from "./TrashMeLater";
 
 export const Home = () => {
-  const { user } = useAuth();
-
-  const onSignUp = async () => {
-    await Auth.signOut();
-  };
-
-  const onDelete = async () => {
-    await Auth.deleteUser(user?.attributes?.email);
-  };
+  const Tab = createBottomTabNavigator();
 
   return (
-    <View style={styles.page}>
-      <View style={styles.container}>
-        <Button
-          style={styles.logInButton}
-          onPress={onSignUp}
-          text={"Log Out"}
-        />
-        <Button
-          style={styles.deleteMeButton}
-          onPress={onDelete}
-          text={"Delete Me"}
-        />
-      </View>
-    </View>
+    <Tab.Navigator
+      screenOptions={{
+        // headerShown: false,
+        tabBarActiveTintColor: "#FFFFFF",
+        tabBarShowLabel: false,
+        tabBarStyle: {
+          height: 70,
+          paddingHorizontal: 5,
+          paddingTop: 15,
+          backgroundColor: "#181A1F",
+          position: "absolute",
+          borderTopWidth: 0,
+        },
+      }}
+    >
+      <Tab.Screen
+        name="Budget"
+        component={TrashMeLater}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name="money-bill-wave" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Transactions "
+        component={TrashMeLater}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name="list-alt" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={TrashMeLater}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Fontisto name="player-settings" color={color} size={size} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 };
-
-const styles = StyleSheet.create({
-  page: {
-    backgroundColor: "#21252B",
-    height: "100%",
-  },
-  container: {
-    marginTop: "auto",
-    marginHorizontal: 20,
-    marginBottom: 22,
-  },
-  logInButton: {
-    marginTop: 20,
-    borderRadius: 2,
-    height: 50,
-    fontWeight: 700,
-    color: "#FFFFFF",
-    fontSize: 16,
-    backgroundColor: "#03A87C",
-  },
-  deleteMeButton: {
-    marginTop: 20,
-    marginBottom: 40,
-    borderRadius: 2,
-    height: 50,
-    fontWeight: 700,
-    color: "#FFFFFF",
-    fontSize: 16,
-    backgroundColor: "#FF7A59",
-  },
-});
