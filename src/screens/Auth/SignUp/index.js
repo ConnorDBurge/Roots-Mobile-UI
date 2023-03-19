@@ -1,4 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
+import * as Haptics from "expo-haptics";
 import { Auth } from "aws-amplify";
 import { Text, View } from "native-base";
 import React, { useState } from "react";
@@ -31,6 +32,7 @@ export const SignUp = () => {
         attributes: { given_name: first_name, email },
       });
       navigation.navigate("ConfirmEmail", { email });
+      Haptics.notificationAsync();
     } catch (e) {
       Alert.alert(e.message);
     }

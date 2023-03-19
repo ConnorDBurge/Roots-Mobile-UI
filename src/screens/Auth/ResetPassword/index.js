@@ -1,5 +1,6 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Auth } from "aws-amplify";
+import * as Haptics from "expo-haptics";
 import { Text, View } from "native-base";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -29,6 +30,7 @@ export const ResetPassword = () => {
     setResetLoading(true);
     try {
       await Auth.forgotPasswordSubmit(email, confirmation, password);
+      Haptics.notificationAsync();
       navigation.navigate("LogIn", { email });
     } catch (e) {
       Alert.alert(e.message);
@@ -41,6 +43,7 @@ export const ResetPassword = () => {
     setResendLoading(true);
     try {
       await Auth.forgotPassword(email);
+      Haptics.notificationAsync();
     } catch (e) {
       Alert.alert(e.message);
     }

@@ -1,4 +1,5 @@
 import React from "react";
+import * as Haptics from "expo-haptics";
 import { StyleSheet } from "react-native";
 import { Box, Text } from "native-base";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
@@ -13,7 +14,12 @@ export const Checkbox = ({ control, style, name, label, rules }) => {
         name={name}
         rules={rules}
         render={({ field: { value, onChange }, fieldState: { error } }) => (
-          <Box style={styles.checkbox}>
+          <Box
+            style={styles.checkbox}
+            onTouchStart={() =>
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+            }
+          >
             <BouncyCheckbox
               size={20}
               fillColor={style?.fillColor}

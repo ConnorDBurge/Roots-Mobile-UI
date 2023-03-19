@@ -1,7 +1,7 @@
 import "react-native-gesture-handler";
 
-import { Navigation } from "./navigation";
-import { AuthenticationProvider } from "./contexts";
+import { Navigation } from "./screens";
+import { AuthenticationProvider } from "./providers";
 
 export const TheApp = () => {
   return (

@@ -1,12 +1,19 @@
-import { Button as _Button, Box } from "native-base";
+import * as Haptics from "expo-haptics";
+import { Box, Button as _Button } from "native-base";
 import React from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 export const Button = ({ text, onPress, style, icon }) => {
   return (
-    <Box style={styles.button}>
+    <TouchableOpacity>
       {icon && <Box style={styles.icon}>{icon}</Box>}
-      <_Button style={style} onPress={onPress}>
+      <_Button
+        style={style}
+        onTouchStart={() =>
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+        }
+        onPress={onPress}
+      >
         <Text
           style={{
             fontWeight: style?.fontWeight,
@@ -17,7 +24,7 @@ export const Button = ({ text, onPress, style, icon }) => {
           {text}
         </Text>
       </_Button>
-    </Box>
+    </TouchableOpacity>
   );
 };
 

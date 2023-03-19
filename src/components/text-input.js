@@ -7,6 +7,7 @@ import {
   Pressable,
   Icon,
 } from "native-base";
+import * as Haptics from "expo-haptics";
 import { MaterialIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { StyleSheet, TouchableWithoutFeedback, Keyboard } from "react-native";
@@ -106,9 +107,19 @@ export const TextInput = ({
                   keyboardType={email ? "email-address" : undefined}
                   textContentType="oneTimeCode"
                   type={secure ? (show ? "text" : "password") : undefined}
+                  onTouchStart={() =>
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+                  }
                   InputRightElement={
                     secure ? (
-                      <Pressable onPress={() => setShow(!show)}>
+                      <Pressable
+                        onPress={() => setShow(!show)}
+                        onTouchStart={() =>
+                          Haptics.impactAsync(
+                            Haptics.ImpactFeedbackStyle.Medium
+                          )
+                        }
+                      >
                         <Icon
                           as={
                             <MaterialIcons

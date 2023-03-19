@@ -4,7 +4,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 
 import { Button } from "../../../components";
-import { useAuth } from "../../../contexts";
+import { useAuth } from "../../../providers";
 
 export const Home = () => {
   const { user } = useAuth();

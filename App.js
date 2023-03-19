@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View } from "react-native";
-import { ThemeProvider } from "./src/contexts";
+import { ThemeProvider } from "./src/providers";
 import { TheApp } from "./src";
 
 export default function App() {
@@ -8,7 +8,7 @@ export default function App() {
     <ThemeProvider>
       <View style={styles.container}>
         <TheApp />
-        <StatusBar style="light" />
+        <StatusBar style="inverted" />
       </View>
     </ThemeProvider>
   );

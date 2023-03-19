@@ -1,5 +1,6 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Auth } from "aws-amplify";
+import * as Haptics from "expo-haptics";
 import { Text, View } from "native-base";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -28,6 +29,7 @@ export const ConfirmEmail = () => {
     setConfirmLoading(true);
     try {
       await Auth.confirmSignUp(email, confirmation);
+      Haptics.notificationAsync();
       navigation.navigate("LogIn", { email });
     } catch (e) {
       Alert.alert(e.message);
@@ -39,8 +41,8 @@ export const ConfirmEmail = () => {
     if (resendLoading) return;
     setResendLoading(true);
     try {
-      console.log({ email });
       await Auth.resendSignUp(email);
+      Haptics.notificationAsync();
     } catch (e) {
       Alert.alert(e.message);
     }

@@ -1,9 +1,10 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Auth } from "aws-amplify";
+import * as Haptics from "expo-haptics";
 import { Text, View } from "native-base";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { StyleSheet, Alert } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 
 import { Google } from "../../../../assets/google";
 import {
@@ -18,7 +19,7 @@ export const LogIn = () => {
   const { params } = useRoute();
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, watch } = useForm({
     defaultValues: { email: params?.email },
   });
 
@@ -27,8 +28,13 @@ export const LogIn = () => {
     setLoading(true);
     try {
       await Auth.signIn(email, password);
+      Haptics.notificationAsync();
     } catch (e) {
       Alert.alert(e.message);
+      if (e.name === "UserNotConfirmedException") {
+        await Auth.resendSignUp(email);
+        navigation.navigate("ConfirmEmail", { email });
+      }
     }
     setLoading(false);
   };
