@@ -1,12 +1,14 @@
 import "react-native-gesture-handler";
 
 import { Navigation } from "./screens";
-import { AuthenticationProvider } from "./providers";
+import { AuthenticationProvider, ApolloProvider } from "./providers";
 
 export const TheApp = () => {
   return (
     <AuthenticationProvider>
-      <Navigation />
+      <ApolloProvider>
+        <Navigation />
+      </ApolloProvider>
     </AuthenticationProvider>
   );
 };
