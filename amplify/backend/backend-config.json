@@ -1,6 +1,6 @@
 {
   "auth": {
-    "rootsmobileui": {
+    "rootsui": {
       "customAuth": false,
       "dependsOn": [],
       "frontendAuthConfig": {
@@ -13,8 +13,8 @@
           "passwordPolicyMinLength": 8
         },
         "signupAttributes": [
-          "EMAIL",
-          "GIVEN_NAME"
+          "GIVEN_NAME",
+          "EMAIL"
         ],
         "socialProviders": [],
         "usernameAttributes": [

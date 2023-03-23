@@ -6,8 +6,8 @@ import config from "../../aws-exports";
 Amplify.configure(config);
 const AmplifyContext = createContext();
 
-export const AuthenticationProvider = ({ user, children }) => {
-  const [currentUser, setCurrentUser] = useState(user);
+export const AuthenticationProvider = ({ children }) => {
+  const [user, setUser] = useState();
 
   useEffect(() => {
     checkUser();
@@ -30,14 +30,14 @@ export const AuthenticationProvider = ({ user, children }) => {
       const authUser = await Auth.currentAuthenticatedUser({
         bypassCache: true,
       });
-      setCurrentUser(authUser);
+      setUser(authUser);
     } catch (e) {
-      setCurrentUser(null);
+      setUser(null);
     }
   };
 
   return (
-    <AmplifyContext.Provider value={{ user: currentUser }}>
+    <AmplifyContext.Provider value={{ user }}>
       {children}
     </AmplifyContext.Provider>
   );

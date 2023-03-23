@@ -3,8 +3,8 @@
   "cognitoConfig": {
     "identityPoolName": "testAuthIdentityPool",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "rootsmc3526082",
-    "userPoolName": "rootsmobileui",
+    "resourceNameTruncated": "rootsud8d45fb0",
+    "userPoolName": "rootsui",
     "autoVerifiedAttributes": [
       "email"
     ],
@@ -20,18 +20,18 @@
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [],
     "requiredAttributes": [
-      "email",
-      "given_name"
+      "given_name",
+      "email"
     ],
     "aliasAttributes": [],
     "userpoolClientGenerateSecret": false,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [],
     "userpoolClientReadAttributes": [],
-    "userpoolClientLambdaRole": "rootsmc3526082_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "rootsud8d45fb0_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "c3526082",
-    "resourceName": "rootsmobileui",
+    "sharedId": "d8d45fb0",
+    "resourceName": "rootsui",
     "authSelections": "identityPoolAndUserPool",
     "serviceName": "Cognito",
     "usernameAttributes": [
