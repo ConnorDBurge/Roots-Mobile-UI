@@ -19,7 +19,7 @@ export const LogIn = () => {
   const { params } = useRoute();
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
-  const { control, handleSubmit, watch } = useForm({
+  const { control, handleSubmit } = useForm({
     defaultValues: { email: params?.email },
   });
 
@@ -35,6 +35,18 @@ export const LogIn = () => {
         await Auth.resendSignUp(email);
         navigation.navigate("ConfirmEmail", { email });
       }
+    }
+    setLoading(false);
+  };
+
+  const loginWithGoogle = async () => {
+    if (loading) return;
+    setLoading(true);
+    try {
+      await Auth.federatedSignIn({ provider: "Google" });
+      Haptics.notificationAsync();
+    } catch (e) {
+      Alert.alert(e.message);
     }
     setLoading(false);
   };
@@ -108,7 +120,7 @@ export const LogIn = () => {
         </View>
         <Button
           style={styles.googleButton}
-          onPress={() => console.warn("Google Log In")}
+          onPress={loginWithGoogle}
           text={"Log In with Google"}
           icon={<Google />}
         />

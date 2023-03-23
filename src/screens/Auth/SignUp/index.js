@@ -31,8 +31,8 @@ export const SignUp = () => {
         password,
         attributes: { given_name: first_name, email },
       });
-      navigation.navigate("ConfirmEmail", { email });
       Haptics.notificationAsync();
+      navigation.navigate("ConfirmEmail", { email });
     } catch (e) {
       Alert.alert(e.message);
     }
@@ -131,31 +131,6 @@ export const SignUp = () => {
           onPress={handleSubmit(onSignUp)}
           text={"Sign Up"}
         />
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <View style={{ flex: 1, height: 1, backgroundColor: "#9CA5B4" }} />
-          <Text
-            style={{
-              width: 50,
-              textAlign: "center",
-              color: "#9CA5B4",
-              marginVertical: 10,
-            }}
-          >
-            or
-          </Text>
-          <View style={{ flex: 1, height: 1, backgroundColor: "#9CA5B4" }} />
-        </View>
-        <Button
-          style={styles.googleButton}
-          onPress={() => console.warn("Google Sign Up")}
-          text={"Sign Up with Google"}
-          icon={<Google />}
-        />
         <Text style={styles.prompt}>
           Already have an account?
           <Link
@@ -200,14 +175,6 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 16,
     backgroundColor: "#03A87C",
-  },
-  googleButton: {
-    borderRadius: 2,
-    height: 50,
-    fontWeight: 700,
-    color: "#FFFFFF",
-    fontSize: 16,
-    backgroundColor: "#181A1F",
   },
   prompt: {
     marginTop: 25,
