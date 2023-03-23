@@ -1,7 +1,9 @@
 import { FontAwesome5, Fontisto } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import * as Haptics from "expo-haptics";
 import React from "react";
 
+import { SettingsStack } from "./Settings";
 import { TrashMeLater } from "./TrashMeLater";
 
 export const Home = () => {
@@ -10,22 +12,28 @@ export const Home = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        // headerShown: false,
+        headerShown: false,
         tabBarActiveTintColor: "#FFFFFF",
-        tabBarShowLabel: false,
         tabBarStyle: {
-          height: 70,
+          height: 80,
           paddingHorizontal: 5,
-          paddingTop: 15,
+          paddingTop: 5,
           backgroundColor: "#181A1F",
+          opacity: 0.9,
           position: "absolute",
           borderTopWidth: 0,
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
         },
       }}
     >
       <Tab.Screen
         name="Budget"
         component={TrashMeLater}
+        listeners={{
+          tabPress: () =>
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light),
+        }}
         options={{
           tabBarIcon: ({ color, size }) => (
             <FontAwesome5 name="money-bill-wave" color={color} size={size} />
@@ -33,8 +41,12 @@ export const Home = () => {
         }}
       />
       <Tab.Screen
-        name="Transactions "
+        name="Transactions"
         component={TrashMeLater}
+        listeners={{
+          tabPress: () =>
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light),
+        }}
         options={{
           tabBarIcon: ({ color, size }) => (
             <FontAwesome5 name="list-alt" color={color} size={size} />
@@ -43,8 +55,15 @@ export const Home = () => {
       />
       <Tab.Screen
         name="Settings"
-        component={TrashMeLater}
+        component={SettingsStack}
+        listeners={{
+          tabPress: () =>
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light),
+        }}
         options={{
+          tabBarStyle: {
+            display: "none",
+          },
           tabBarIcon: ({ color, size }) => (
             <Fontisto name="player-settings" color={color} size={size} />
           ),

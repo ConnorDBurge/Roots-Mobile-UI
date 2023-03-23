@@ -4,7 +4,7 @@ import { Auth } from "aws-amplify";
 import { Text, View } from "native-base";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Alert } from "react-native";
 
 import { Google } from "../../../../assets/google";
 import {

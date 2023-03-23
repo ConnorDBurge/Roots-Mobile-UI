@@ -1,19 +1,19 @@
 {
   "staging": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-rootsmobileui-staging-235955-authRole",
-      "UnauthRoleArn": "arn:aws:iam::524929034221:role/amplify-rootsmobileui-staging-235955-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::524929034221:role/amplify-rootsmobileui-staging-235955-authRole",
+      "AuthRoleName": "amplify-rootsmobileui-staging-214052-authRole",
+      "UnauthRoleArn": "arn:aws:iam::524929034221:role/amplify-rootsmobileui-staging-214052-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::524929034221:role/amplify-rootsmobileui-staging-214052-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-rootsmobileui-staging-235955-deployment",
-      "UnauthRoleName": "amplify-rootsmobileui-staging-235955-unauthRole",
-      "StackName": "amplify-rootsmobileui-staging-235955",
-      "StackId": "arn:aws:cloudformation:us-east-1:524929034221:stack/amplify-rootsmobileui-staging-235955/a6c7fff0-c456-11ed-a35c-12e96e2f7e01",
-      "AmplifyAppId": "d10njyz03ofcd1"
+      "DeploymentBucketName": "amplify-rootsmobileui-staging-214052-deployment",
+      "UnauthRoleName": "amplify-rootsmobileui-staging-214052-unauthRole",
+      "StackName": "amplify-rootsmobileui-staging-214052",
+      "StackId": "arn:aws:cloudformation:us-east-1:524929034221:stack/amplify-rootsmobileui-staging-214052/381c9590-c8fa-11ed-94c3-0eef70f94cb3",
+      "AmplifyAppId": "dzuhyb8q0fy3k"
     },
     "categories": {
       "auth": {
-        "RootsMobileUI": {}
+        "rootsmobileui": {}
       }
     }
   }
