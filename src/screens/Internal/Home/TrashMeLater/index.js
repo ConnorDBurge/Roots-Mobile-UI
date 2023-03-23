@@ -2,7 +2,6 @@ import { Auth } from "aws-amplify";
 import { View } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
-import { gql, useQuery } from "@apollo/client";
 
 import { Button } from "../../../../components";
 import { useAuth } from "../../../../providers";
