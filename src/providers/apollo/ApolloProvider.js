@@ -9,8 +9,13 @@ import { Auth } from "aws-amplify";
 import React from "react";
 
 export const ApolloProvider = ({ children }) => {
+  const deployment = {
+    staging: "https://8v9u4dvn1b.execute-api.us-east-1.amazonaws.com/graphql",
+    prod: "https://doo1z471si.execute-api.us-east-1.amazonaws.com/graphql",
+  };
+
   const httpLink = createHttpLink({
-    uri: "https://4u71cpdrx3.execute-api.us-east-1.amazonaws.com/graphql",
+    uri: deployment?.staging,
   });
 
   const authLink = setContext(async (_, { headers }) => {
