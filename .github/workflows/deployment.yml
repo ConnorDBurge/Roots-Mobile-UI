@@ -29,7 +29,7 @@ jobs:
         run: yarn install
 
       - name: Install Amplify CLI
-        run: npm install -g @aws-amplify/cli@5.0.0
+        run: npm install -g @aws-amplify/cli
 
       - name: Configure Amplify CLI
         run: amplify configure --accessKeyId ${{ secrets.AWS_ACCESS_KEY_ID }} --secretAccessKey ${{ secrets.AWS_SECRET_ACCESS_KEY }} --region us-east-1
