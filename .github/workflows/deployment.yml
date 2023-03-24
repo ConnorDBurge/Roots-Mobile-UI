@@ -34,8 +34,14 @@ jobs:
       - name: Configure Amplify CLI
         run: amplify configure --accessKeyId ${{ secrets.AWS_ACCESS_KEY_ID }} --secretAccessKey ${{ secrets.AWS_SECRET_ACCESS_KEY }} --region us-east-1
 
-      - name: Pull Amplify project configuration
-        run: amplify pull
+      - name: Pull Amplify backend environment and generate aws-exports.js
+        run: |
+          echo '{
+            "accessKeyId": "${{ secrets.AWS_ACCESS_KEY_ID }}",
+            "secretAccessKey": "${{ secrets.AWS_SECRET_ACCESS_KEY }}",
+            "region": "${{ secrets.AWS_REGION }}"
+          }' > amplify.awsconfig
+          echo -e "y\nus-east-1\n" | amplify pull --appId ${{ secrets.AMPLIFY_APP_ID }} --envName staging
 
       - name: Setup EAS
         uses: expo/expo-github-action@v8
