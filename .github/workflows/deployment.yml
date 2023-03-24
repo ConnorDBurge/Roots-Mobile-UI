@@ -52,6 +52,9 @@ jobs:
         with:
           node-version: 16
 
+      - name: Install dependencies
+        run: npm install
+
       - name: Setup EAS
         uses: expo/expo-github-action@v8
         with:
@@ -83,6 +86,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
+
+      - name: Install dependencies
+        run: npm install
 
       - name: Setup EAS
         uses: expo/expo-github-action@v8
