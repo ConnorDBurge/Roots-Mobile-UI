@@ -28,29 +28,6 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Configure Amplify
-        uses: ambientlight/amplify-cli-action@0.3.0
-        with:
-          amplify_command: configure
-          amplify_cli_version: 10.8.1
-          amplify_env: staging
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: us-east-1
-
-      - name: Pull Amplify Backend
-        uses: ambientlight/amplify-cli-action@0.3.0
-        with:
-          amplify_command: pull
-          amplify_cli_version: 10.8.1
-          amplify_env: staging
-          args: --appId ${{ secrets.AMPLIFY_APP_ID }} --yes
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: us-east-1
-
       - name: Setup EAS
         uses: expo/expo-github-action@v8
         with:
