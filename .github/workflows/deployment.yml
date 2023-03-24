@@ -39,7 +39,7 @@ jobs:
           echo '{
             "accessKeyId": "${{ secrets.AWS_ACCESS_KEY_ID }}",
             "secretAccessKey": "${{ secrets.AWS_SECRET_ACCESS_KEY }}",
-            "region": "${{ secrets.AWS_REGION }}"
+            "region": us-east-1
           }' > amplify.awsconfig
           echo -e "y\nus-east-1\n" | amplify pull --appId ${{ secrets.AMPLIFY_APP_ID }} --envName staging
 
