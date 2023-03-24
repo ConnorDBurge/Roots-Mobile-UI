@@ -7,22 +7,28 @@ Amplify.configure(config);
 const AmplifyContext = createContext();
 
 export const AuthenticationProvider = ({ children }) => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
+  const [customState, setCustomState] = useState(null);
 
   useEffect(() => {
-    checkUser();
-  }, []);
-
-  useEffect(() => {
-    const listener = (data) => {
-      if (
-        data?.payload?.event === "signIn" ||
-        data?.payload?.event === "signOut"
-      ) {
-        checkUser();
+    const unsubscribe = Hub.listen("auth", ({ payload: { event, data } }) => {
+      switch (event) {
+        case "signIn":
+          setUser(data);
+          break;
+        case "signOut":
+          setUser(null);
+          break;
+        case "customOAuthState":
+          setUser(null);
       }
-    };
-    Hub.listen("auth", listener);
+    });
+
+    Auth.currentAuthenticatedUser()
+      .then((currentUser) => setUser(currentUser))
+      .catch(() => console.log("Not signed in"));
+
+    return unsubscribe;
   }, []);
 
   const checkUser = async () => {
