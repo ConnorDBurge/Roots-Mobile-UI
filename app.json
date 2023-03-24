@@ -9,7 +9,20 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
-    }
+      "supportsTablet": true,
+      "bundleIdentifier": "com.connordburge.RootsMobileUI"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f6321336-7de7-4b4d-a424-5b4164b3b6d3"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/f6321336-7de7-4b4d-a424-5b4164b3b6d3"
+    },
+    "android": {}
   }
 }
