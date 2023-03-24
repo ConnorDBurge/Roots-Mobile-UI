@@ -35,7 +35,7 @@ jobs:
         run: amplify configure --accessKeyId ${{ secrets.AWS_ACCESS_KEY_ID }} --secretAccessKey ${{ secrets.AWS_SECRET_ACCESS_KEY }} --region us-east-1
 
       - name: Pull Amplify project configuration
-        run: amplify pull --headless --yes --headlessConfigFile amplify-headless-config.json
+        run: amplify pull
 
       - name: Setup EAS
         uses: expo/expo-github-action@v8
