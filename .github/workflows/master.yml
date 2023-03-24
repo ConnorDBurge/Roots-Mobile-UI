@@ -1,10 +1,9 @@
-name: update
 on:
   push:
     branches:
       - master
 jobs:
-  update:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: 🏗 Setup repo
@@ -25,5 +24,5 @@ jobs:
       - name: 📦 Install dependencies
         run: yarn install
 
-      - name: 🚀 Create update
-        run: eas init && eas update --auto --non-interactive
+      - name: 🚀 Build app
+        run: eas build --non-interactive
