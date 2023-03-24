@@ -32,7 +32,20 @@ jobs:
         uses: ambientlight/amplify-cli-action@0.3.0
         with:
           amplify_command: configure
+          amplify_version: 10.8.1
           amplify_env: staging
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: us-east-1
+
+      - name: Pull Amplify Backend
+        uses: ambientlight/amplify-cli-action@0.3.0
+        with:
+          amplify_command: pull
+          amplify_version: 10.8.1
+          amplify_env: staging
+          args: --appId ${{ secrets.AMPLIFY_APP_ID }} --yes
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
