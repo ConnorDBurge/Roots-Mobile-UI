@@ -1,4 +1,4 @@
-name: update
+name: CI/CD Pipeline
 on:
   push:
     branches:
@@ -16,7 +16,6 @@ jobs:
             echo "You must provide an EXPO_TOKEN secret linked to this project's Expo account in this repo's secrets. Learn more: https://docs.expo.dev/eas-update/github-actions"
             exit 1
           fi
-
       - name: Checkout repository
         uses: actions/checkout@v3
 
@@ -26,14 +25,23 @@ jobs:
           node-version: 18.x
           cache: yarn
 
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Install Amplify CLI
+        run: npm install -g @aws-amplify/cli
+
+      - name: Configure Amplify CLI
+        run: amplify configure --accessKeyId ${{ secrets.AWS_ACCESS_KEY_ID }} --secretAccessKey ${{ secrets.AWS_SECRET_ACCESS_KEY }} --region us-east-1
+
+      - name: Pull Amplify project configuration
+        run: amplify pull --appId ${{ secrets.AMPLIFY_APP_ID }} --envName staging --yes
+
       - name: Setup EAS
         uses: expo/expo-github-action@v8
         with:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
-
-      - name: Install dependencies
-        run: yarn install
 
       - name: Publish update
         run: eas update --auto
