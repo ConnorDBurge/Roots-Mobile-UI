@@ -4,44 +4,28 @@ import Constants from "expo-constants";
 
 import config from "../../aws-exports";
 
-console.log(Constants.experienceUrl);
-
-console.warn(Constants);
-
-const isLocalhost = !Boolean(
-  Constants.experienceUrl.match(
-    /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
-  )
+const isLocalhost = Boolean(
+  Constants.experienceUrl.match(/exp:\/\/10.0.0.8:19000/)
 );
-
-// Assuming you have two redirect URIs, and the first is for localhost and second is for production
-const [localRedirectSignIn, productionRedirectSignIn] =
-  config.oauth.redirectSignIn.split(",");
-
-const [localRedirectSignOut, productionRedirectSignOut] =
-  config.oauth.redirectSignOut.split(",");
 
 const updatedAwsConfig = {
   ...config,
   oauth: {
     ...config.oauth,
     redirectSignIn: isLocalhost
-      ? localRedirectSignIn
-      : productionRedirectSignIn,
+      ? config.oauth.redirectSignIn
+      : Constants.experienceUrl,
     redirectSignOut: isLocalhost
-      ? localRedirectSignOut
-      : productionRedirectSignOut,
+      ? config.oauth.redirectSignOut
+      : Constants.experienceUrl,
   },
 };
-
-console.log({ isLocalhost });
 
 Amplify.configure(updatedAwsConfig);
 const AmplifyContext = createContext();
 
 export const AuthenticationProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [customState, setCustomState] = useState(null);
 
   useEffect(() => {
     const unsubscribe = Hub.listen("auth", ({ payload: { event, data } }) => {
