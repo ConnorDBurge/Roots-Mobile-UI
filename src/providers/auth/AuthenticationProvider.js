@@ -5,7 +5,7 @@ import Constants from "expo-constants";
 import config from "../../aws-exports";
 
 const isLocalhost = Boolean(
-  Constants.experienceUrl.match(/exp:\/\/10.0.0.8:19000/)
+  Constants.linkingUri.match(/exp:\/\/10.0.0.8:19000/)
 );
 
 const updatedAwsConfig = {
@@ -14,10 +14,10 @@ const updatedAwsConfig = {
     ...config.oauth,
     redirectSignIn: isLocalhost
       ? config.oauth.redirectSignIn
-      : Constants.experienceUrl,
+      : Constants.linkingUri,
     redirectSignOut: isLocalhost
       ? config.oauth.redirectSignOut
-      : Constants.experienceUrl,
+      : Constants.linkingUri,
   },
 };
 
@@ -47,17 +47,6 @@ export const AuthenticationProvider = ({ children }) => {
 
     return unsubscribe;
   }, []);
-
-  const checkUser = async () => {
-    try {
-      const authUser = await Auth.currentAuthenticatedUser({
-        bypassCache: true,
-      });
-      setUser(authUser);
-    } catch (e) {
-      setUser(null);
-    }
-  };
 
   return (
     <AmplifyContext.Provider value={{ user }}>
