@@ -5,6 +5,7 @@ import { Text, View } from "native-base";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Alert, StyleSheet } from "react-native";
+import * as Linking from "expo-linking";
 
 import { Google } from "../../../../assets/google";
 import {
@@ -43,7 +44,13 @@ export const LogIn = () => {
     if (loading) return;
     setLoading(true);
     try {
-      await Auth.federatedSignIn({ provider: "Google" });
+      await Auth.federatedSignIn(
+        { provider: "Google" },
+        {
+          redirectSignIn: Linking.createURL("/"),
+          redirectSignOut: Linking.createURL("/"),
+        }
+      );
       Haptics.notificationAsync();
     } catch (e) {
       Alert.alert(e.message);

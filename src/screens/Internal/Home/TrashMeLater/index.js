@@ -18,8 +18,9 @@ const TEST = gql`
 
 export const TrashMeLater = () => {
   const { user } = useAuth();
-  const { data } = useQuery(TEST);
+  const { data, error } = useQuery(TEST);
   data && console.log({ data });
+  error && console.log({ error });
 
   const onSignUp = async () => {
     await Auth.signOut();

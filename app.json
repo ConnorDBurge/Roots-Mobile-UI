@@ -1,5 +1,7 @@
 {
   "expo": {
+    "owner": "connordburge",
+    "scheme": "exp",
     "name": "Roots-Mobile-UI",
     "slug": "Roots-Mobile-UI",
     "version": "1.0.0",
