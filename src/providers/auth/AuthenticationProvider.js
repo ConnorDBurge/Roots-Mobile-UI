@@ -1,9 +1,42 @@
 import { Amplify, Auth, Hub } from "aws-amplify";
 import React, { createContext, useContext, useEffect, useState } from "react";
+import Constants from "expo-constants";
 
 import config from "../../aws-exports";
 
-Amplify.configure(config);
+console.log(Constants.experienceUrl);
+
+console.warn(Constants);
+
+const isLocalhost = !Boolean(
+  Constants.experienceUrl.match(
+    /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
+  )
+);
+
+// Assuming you have two redirect URIs, and the first is for localhost and second is for production
+const [localRedirectSignIn, productionRedirectSignIn] =
+  config.oauth.redirectSignIn.split(",");
+
+const [localRedirectSignOut, productionRedirectSignOut] =
+  config.oauth.redirectSignOut.split(",");
+
+const updatedAwsConfig = {
+  ...config,
+  oauth: {
+    ...config.oauth,
+    redirectSignIn: isLocalhost
+      ? localRedirectSignIn
+      : productionRedirectSignIn,
+    redirectSignOut: isLocalhost
+      ? localRedirectSignOut
+      : productionRedirectSignOut,
+  },
+};
+
+console.log({ isLocalhost });
+
+Amplify.configure(updatedAwsConfig);
 const AmplifyContext = createContext();
 
 export const AuthenticationProvider = ({ children }) => {
